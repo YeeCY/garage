@@ -8,7 +8,7 @@ from torch.nn import functional as F
 from garage import wrap_experiment
 from garage.envs import normalize
 from garage.experiment import deterministic
-from garage.replay_buffer import PathBuffer, ReplayBuffer
+from garage.replay_buffer import PathBuffer
 from garage.sampler import FragmentWorker, LocalSampler
 from garage.torch import set_gpu_mode
 from garage.torch.algos import SAC
@@ -17,7 +17,6 @@ from garage.torch.q_functions import ContinuousMLPQFunction
 from garage.trainer import Trainer
 
 import argparse
-import os
 import os.path as osp
 from metaworld_examples.utils import make_metaworld_env
 
@@ -31,7 +30,7 @@ if __name__ == "__main__":
 
     base_log_dir = osp.expanduser(args.base_log_dir)
 
-    @wrap_experiment(snapshot_mode='none',
+    @wrap_experiment(snapshot_mode='last',
                      log_dir=osp.join(base_log_dir, 'sac-' +
                                       args.env_name, str(args.seed)),
                      use_existing_dir=True)
@@ -86,7 +85,7 @@ if __name__ == "__main__":
                   gradient_steps_per_itr=1000,
                   max_episode_length_eval=500,
                   replay_buffer=replay_buffer,
-                  min_buffer_size=1e4,
+                  min_buffer_size=int(1e4),
                   target_update_tau=5e-3,
                   discount=0.99,
                   buffer_batch_size=256,
