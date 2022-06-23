@@ -8,7 +8,7 @@ from torch.nn import functional as F
 from garage import wrap_experiment
 from garage.envs import normalize
 from garage.experiment import deterministic
-from garage.replay_buffer import PathBuffer
+from garage.replay_buffer import PathBuffer, ReplayBuffer
 from garage.sampler import FragmentWorker, LocalSampler
 from garage.torch import set_gpu_mode
 from garage.torch.algos import SAC
@@ -17,6 +17,7 @@ from garage.torch.q_functions import ContinuousMLPQFunction
 from garage.trainer import Trainer
 
 import argparse
+import os
 import os.path as osp
 from metaworld_examples.utils import make_metaworld_env
 
@@ -66,7 +67,8 @@ if __name__ == "__main__":
                                      hidden_sizes=[256, 256],
                                      hidden_nonlinearity=F.relu)
 
-        replay_buffer = PathBuffer(capacity_in_transitions=int(1e6))
+        replay_buffer = ReplayBuffer(size_in_transitions=int(1e6),
+                                     time_horizon=expl_env)
 
         sampler = LocalSampler(agents=policy,
                                envs=expl_env,
@@ -96,7 +98,10 @@ if __name__ == "__main__":
         sac.to()
         trainer.setup(algo=sac, env=expl_env)
         # total_timesteps = n_epochs * steps_per_epoch * sampler_batch_size = 1000 * 1 * 1000 = 1M
-        trainer.train(n_epochs=1000, batch_size=1000)
+        # trainer.train(n_epochs=1000, batch_size=1000)
+        trainer.train(n_epochs=10, batch_size=1000)
+
+        print()
 
     # s = np.random.randint(0, 1000)
     sac_metaworld_batch(env_name=args.env_name, seed=args.seed)
