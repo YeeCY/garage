@@ -67,8 +67,10 @@ if __name__ == "__main__":
                                      hidden_sizes=[256, 256],
                                      hidden_nonlinearity=F.relu)
 
-        replay_buffer = ReplayBuffer(size_in_transitions=int(1e6),
-                                     time_horizon=expl_env)
+        # replay_buffer = ReplayBuffer(
+        #     size_in_transitions=int(1e6),
+        #     time_horizon=expl_env.spec.max_episode_length)
+        replay_buffer = PathBuffer(capacity_in_transitions=int(1e6))
 
         sampler = LocalSampler(agents=policy,
                                envs=expl_env,
