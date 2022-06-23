@@ -99,8 +99,8 @@ if __name__ == "__main__":
         sac.to()
         trainer.setup(algo=sac, env=expl_env)
         # total_timesteps = n_epochs * steps_per_epoch * sampler_batch_size = 1000 * 1 * 1000 = 1M
-        # trainer.train(n_epochs=1000, batch_size=1000)
-        trainer.train(n_epochs=10, batch_size=1000)
+        trainer.train(n_epochs=1000, batch_size=1000)
+        # trainer.train(n_epochs=10, batch_size=1000)
 
     # s = np.random.randint(0, 1000)
     sac_metaworld_batch(env_name=args.env_name, seed=args.seed)
