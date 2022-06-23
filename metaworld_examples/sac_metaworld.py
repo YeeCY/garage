@@ -14,11 +14,11 @@ from garage.torch import set_gpu_mode
 from garage.torch.algos import SAC
 from garage.torch.policies import TanhGaussianMLPPolicy
 from garage.torch.q_functions import ContinuousMLPQFunction
-from garage.trainer import Trainer
 
 import argparse
 import os.path as osp
 from metaworld_examples.utils import make_metaworld_env
+from metaworld_examples.utils import MetaWorldTrainer
 
 
 if __name__ == "__main__":
@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
         """
         deterministic.set_seed(seed)
-        trainer = Trainer(snapshot_config=ctxt)
+        trainer = MetaWorldTrainer(snapshot_config=ctxt)
         expl_env = normalize(make_metaworld_env(env_name, seed=seed))
         eval_env = normalize(make_metaworld_env(env_name, seed=seed))
 

@@ -4,8 +4,8 @@ import os.path as osp
 import pickle
 
 
-from garage import wrap_experiment
-from garage.trainer import Trainer
+# from garage import wrap_experiment
+# from garage.trainer import Trainer
 
 
 if __name__ == "__main__":
@@ -39,6 +39,6 @@ if __name__ == "__main__":
     with open(osp.join(saved_dir, 'params.pkl'), 'rb') as f:
         snapshot = pickle.load(f)
 
-    replay_buffer = snapshot['algo'].replay_buffer
+    replay_buffer = snapshot['replay_buffer']
 
     print()
