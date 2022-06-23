@@ -28,9 +28,10 @@ if __name__ == "__main__":
     parser.add_argument('--base_log_dir', type=str, default='./data')
     args = parser.parse_args()
 
+    base_log_dir = osp.expanduser(args.base_log_dir)
 
     @wrap_experiment(snapshot_mode='none',
-                     log_dir=osp.join(args.base_log_dir, 'sac-' +
+                     log_dir=osp.join(base_log_dir, 'sac-' +
                                       args.env_name, str(args.seed)),
                      use_existing_dir=True)
     def sac_metaworld_batch(ctxt=None, env_name='reach-v2', seed=0):
