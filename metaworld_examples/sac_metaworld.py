@@ -101,7 +101,5 @@ if __name__ == "__main__":
         # trainer.train(n_epochs=1000, batch_size=1000)
         trainer.train(n_epochs=10, batch_size=1000)
 
-        print()
-
     # s = np.random.randint(0, 1000)
     sac_metaworld_batch(env_name=args.env_name, seed=args.seed)
